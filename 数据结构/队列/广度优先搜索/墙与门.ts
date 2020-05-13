@@ -32,6 +32,7 @@ const distanceToNearestGate = (
   const m = rooms.length;
   const n = rooms[0].length;
   const q: number[][] = [];
+  // 创建一个 二维数组 用来存放到 传入节点的距离 为 0
   const distance: Array<Array<number>> = new Array(m).fill([]).map((item) => {
     const arr = [];
     for (let i = 0; i < n; i++) {
@@ -46,18 +47,19 @@ const distanceToNearestGate = (
       const r: number = row + DIRECTIONS[i][0];
       const c: number = col + DIRECTIONS[i][1];
       if (
-        r < 0 ||
-        c < 0 ||
-        r >= m ||
-        c >= n ||
-        rooms[r][c] === WALL ||
-        distance[r][c] !== 0 ||
-        (r === startRow && c === startCol)
+        r < 0 || // 判断边界
+        c < 0 || // 判断边界
+        r >= m || // 判断边界
+        c >= n || // 判断边界
+        rooms[r][c] === WALL || // 判断改节点手否是墙
+        distance[r][c] !== 0 || // 判断改节点是否被遍历过
+        (r === startRow && c === startCol) // 判断是否是初始节点
       ) {
         continue;
       }
-      distance[r][c] = distance[row][col] + 1;
+      distance[r][c] = distance[row][col] + 1; // 当前距离 等于 上一次遍历的结果 + 1
       if (rooms[r][c] === GATE) {
+        // 如果遇到门返回当前距离
         return distance[r][c];
       }
       q.push([r, c]);
