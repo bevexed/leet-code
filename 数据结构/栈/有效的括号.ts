@@ -11,7 +11,6 @@ const isValid = function (s: string): boolean {
       stack.push(str);
       continue;
     }
-    console.log(stack);
     switch (str) {
       case '}':
         if (stack.pop() !== '{') {
